@@ -1,0 +1,59 @@
+"""
+          Focus on making Account  superclass into an abstract class with abstract methods. 
+          i.e. declared methods but only instantiated thru the subclasses only
+"""
+class Account:
+	def __init__(self):
+		self.__Balance = 0 #instance varible
+	def deposit(self,value):
+		self.__Balance += value
+	def withdraw(self,value):
+		self.__Balance -= value
+	def getBalance(self):
+		if self.__Balance < 0:
+			self.__Balance *= (-1)
+			return('This account has been overdrawn by: \n$',self.__Balance)
+		else:
+			return ('$',self.__Balance)
+	def prompt(self):
+		enter = True
+		while enter:
+			p = input("What would you like to do? \nQuick Cash? \nMake a deposit? \nMake a withdraw? \nView Balance? \ne\nEnter any key to exit?")
+        	if p == 'Quick Cash':
+	            act = int(input("How much would you like?\n$20\n$40\n$60"))
+	            if act == 20: Account.withdraw(self,act)
+	            elif act == 40: Account.withdraw(self,act)
+	            elif act == 60: Account.withdraw(self,act)
+	            else: enter = False
+        	elif p == 'Make a deposit' or 'deposit':
+	            comingin = int(input("Enter deposit amount:\n"))
+	            Account.deposit(self,comingin)
+	        elif p == 'Make a withdraw' or 'withdraw':
+	            comingin = int(input("Enter withdraw amount:\n"))
+	            Account.withdraw(self,comingin)
+        	elif p == 'View Balance' or 'View balance': Account.getBalance(self)
+        	else: enter = False
+
+
+class CheckingAccount(Account):
+	def __init__(self):			# Needs a constructor -- the constructer adds a new property, an instance of the superclass's constructor
+		Account.__init__(self) # Must implicitly invoke the Superclass's constructor ---- Points to the superclass object; which is initiated by the constructor	
+
+class SavingsAccount(Account):
+	def __init__(self):
+		Account.__init__(self)
+
+class BuisnessAccount(Account):
+	def __init__(self):
+		Account.__init__(self)
+
+##                                    User / Command line recommended code
+c = CheckingAccount()
+s = SavingsAccount()
+b = BuisnessAccount()
+
+c.prompt()
+b.deposit(200)
+b.getBalance()
+c.deposit(200.00)
+c.getBalance()
